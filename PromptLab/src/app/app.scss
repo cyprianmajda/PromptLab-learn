@@ -1,0 +1,25 @@
+input, textarea {
+   border: 1px solid #f0f0f0;
+   outline: none;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px 10px;
+    transition-duration: 400ms;
+}
+
+#promptAI {
+    width: calc(100% - 40px);
+}
+
+input:hover,
+textarea:hover {
+    background: #f0f0f0;
+}
+.error {
+    color: maroon;
+    font-weight: bold;
+    background: #fafafa;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+}

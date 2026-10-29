@@ -232,8 +232,25 @@
           <clipPath id="a"><path fill="#fff" d="M0 0h982v239H0z" /></clipPath>
         </defs>
       </svg>
-      <h1>Hello, {{ title() }}</h1>
-      <p>Congratulations! Your app is running. 🎉</p>
+      <h1>{{ title() }}</h1>
+      <p>Twórz, testuj i ulepszaj swoje prompty AI</p>
+      <label for="rolaAI">Rola AI</label>
+      <input [(ngModel)]="role" id="rolaAI" type="text" placeholder="cierpliwy nauczyciel">
+      @if (submitted && !role) {
+      <p class="error">Pole Rola jest puste.</p>
+      }
+      <label for="promptAI">Prompt AI</label>
+      <textarea [(ngModel)]="prompt" id="promptAI"></textarea>
+      @if (submitted && !prompt) {
+      <p class="error">Pole Prompt jest puste.</p>
+      }
+      <button (click)="submitPrompt()">Wykonaj</button>
+      @if (submitted && role && prompt) {
+      <p>
+        Prompt:
+        Działaj jako {{ role }}, wykonaj zadanie: "{{ prompt }}"
+      </p>
+      }
     </div>
     <div class="divider" role="separator" aria-label="Divider"></div>
     <div class="right-side">
