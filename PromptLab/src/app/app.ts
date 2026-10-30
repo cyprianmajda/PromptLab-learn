@@ -10,12 +10,21 @@ import { FormsModule } from '@angular/forms';
 })
 export class App {
   protected readonly title = signal('PromptLab');
+  currentPage: string = "form";
   role: string = "";
   prompt: string = "";
   preparedPrompt: string = "";
   submitted: boolean = false;
   validationErrors: boolean = false;
   savedPrompts: string[] = [];
+
+  showForm() {
+    this.currentPage = "form";
+  }
+
+  showSaved() {
+    this.currentPage = "savedPrompts";
+  }
 
   submitPrompt() {
     this.resetFormValues();

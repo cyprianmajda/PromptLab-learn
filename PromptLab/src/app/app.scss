@@ -1,13 +1,86 @@
-input, textarea {
-   border: 1px solid #f0f0f0;
-   outline: none;
-    padding: 10px;
-    border-radius: 5px;
-    margin: 5px 10px;
-    transition-duration: 400ms;
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+main, * {
+    font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 }
 
-#promptAI {
+.nav {
+    width: calc(100vw - 60px);
+    text-align: center;
+    background: #0F172A;
+    margin: 0 auto;
+    color: #fafafa;
+    padding: 30px;
+}
+.nav h1 {
+    font-weight: 300;
+    letter-spacing: 0px;
+    font-size: 40px;
+}
+.nav h4 {
+    margin-top: -30px;
+    color: #5a5a5a;
+}
+.nav-buttons button {
+    background: #1a284b;
+    padding: 10px 25px;
+    margin: 0 5px;
+    outline: none;
+    border: none;
+    color: #f0f0f0;
+    border-radius: 7px;
+    transition-duration: 100ms;
+}
+.nav-buttons button:hover {
+    cursor: pointer;
+    background: #182b56;
+}
+.content {
+    width: 80vw;
+    margin: 0 auto;
+    max-width: 1000px;
+}
+.container {
+    padding: 30px;
+    text-align: center;
+    width: calc(100% - 60px);
+}
+.container-title {
+    text-align: left;
+}
+.container-title h4 {
+    font-size: 15px;
+    margin-top: -15px;
+    margin-left: 10px;
+}
+.container hr {
+    border: 1.5px solid #f0f0f0;
+    border-radius: 20px;
+    width: 50%;
+}
+.form {
+    width: 80%;
+    margin: 0px auto;
+    margin-top: 60px;
+}
+.formInput {
+    margin: 10px;
+}
+.formInput label {
+    margin: 5px;
+    text-align: left;
+    float: left;
+    font-size: 14px;
+}
+input, textarea {
+    border: none;
+   border-bottom: 2px solid #f0f0f0;
+   outline: none;
+    padding: 10px;
+    margin: 5px 10px;
+    transition-duration: 400ms; 
     width: calc(100% - 40px);
 }
 
@@ -17,9 +90,20 @@ textarea:hover {
 }
 .error {
     color: maroon;
-    font-weight: bold;
-    background: #fafafa;
-    padding: 15px;
+    font-weight: 400;
+    margin: 5px 23px;
     border-radius: 10px;
-    text-align: center;
+    text-align: left;
+    font-size: 12px;
+}
+.form-btn {
+    outline: none;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    width: calc(100% - 40px);
+    margin: 10px;
+}
+.savedPrompt {
+
 }
