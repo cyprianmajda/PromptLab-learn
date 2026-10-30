@@ -10,11 +10,34 @@ import { FormsModule } from '@angular/forms';
 })
 export class App {
   protected readonly title = signal('PromptLab');
-  role = "programista";
-  prompt = "napisz kod c#";
-  submitted = false;
+  role: string = "";
+  prompt: string = "";
+  preparedPrompt: string = "";
+  submitted: boolean = false;
+  validationErrors: boolean = false;
+  savedPrompts: string[] = [];
 
   submitPrompt() {
+    this.resetFormValues();
     this.submitted = true;
+
+    if (this.role && this.prompt) {
+      this.preparedPrompt = "Działaj jako " + this.role + ", wykonaj zadanie: " + this.prompt;
+
+      this.addPromptToList(this.preparedPrompt);
+    } else {
+      this.validationErrors = true;
+    }
+    
+  }
+  
+  resetFormValues() {
+    this.validationErrors = false;
+    this.preparedPrompt = "";
+    this.submitted = false;
+  }
+
+  addPromptToList(preparedPrompt: string) {
+    this.savedPrompts.push(preparedPrompt);
   }
 }
