@@ -64,6 +64,7 @@ export class App {
   setCurrentPrompt(index: number) {
     this.currentPage = "form";
     this.prompt = this.savedPrompts[index];
+    this.prompt = new Prompt(this.prompt.role, this.prompt.promptAI);
     this.currentIndex = index;
   }
 }
