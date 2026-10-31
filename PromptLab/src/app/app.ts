@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Prompt } from './prompt.model';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +12,11 @@ import { FormsModule } from '@angular/forms';
 export class App {
   protected readonly title = signal('PromptLab');
   currentPage: string = "form";
-  role: string = "";
-  prompt: string = "";
-  preparedPrompt: string = "";
+  prompt: Prompt = new Prompt("","");
   submitted: boolean = false;
   validationErrors: boolean = false;
-  savedPrompts: string[] = [];
+  savedPrompts: Prompt[] = [];
+  currentIndex: number | null = null;
 
   showForm() {
     this.currentPage = "form";
@@ -30,23 +30,40 @@ export class App {
     this.resetFormValues();
     this.submitted = true;
 
-    if (this.role && this.prompt) {
-      this.preparedPrompt = "Działaj jako " + this.role + ", wykonaj zadanie: " + this.prompt;
-
-      this.addPromptToList(this.preparedPrompt);
+    if (this.prompt.role && this.prompt.promptAI) {
+      this.prompt.generatedPrompt = "Działaj jako " + this.prompt.role + ", wykonaj zadanie: " + this.prompt.promptAI;
     } else {
       this.validationErrors = true;
     }
-    
+  }
+
+  savePrompt() {
+    this.submitPrompt();
+    if (this.currentIndex != null) {
+      this.modifyPrompt(this.currentIndex);
+    } else {
+      this.addPromptToList();
+    }
+    this.currentIndex = null;
+    this.prompt = new Prompt("", "");
   }
   
   resetFormValues() {
     this.validationErrors = false;
-    this.preparedPrompt = "";
     this.submitted = false;
   }
 
-  addPromptToList(preparedPrompt: string) {
-    this.savedPrompts.push(preparedPrompt);
+  addPromptToList() {
+    this.savedPrompts.push(this.prompt);
+  }
+
+  modifyPrompt(index: number) {
+    this.savedPrompts[index] = this.prompt;
+  }
+
+  setCurrentPrompt(index: number) {
+    this.currentPage = "form";
+    this.prompt = this.savedPrompts[index];
+    this.currentIndex = index;
   }
 }

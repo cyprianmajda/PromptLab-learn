@@ -27,25 +27,35 @@
       <div class="form">
         <div class="formInput">
           <label for="rolaAI">Rola AI</label>
-          <input [(ngModel)]="role" (input)="resetFormValues()" id="rolaAI" type="text" placeholder="Programista C#">
-          @if (validationErrors && !role) {
+          <input [(ngModel)]="prompt.role" (input)="resetFormValues()" id="rolaAI" type="text" placeholder="Programista C#">
+          @if (validationErrors && !prompt.role) {
             <p class="error">*Pole Rola jest puste.</p>
           }
         </div>
         <div class="formInput">
           <label for="promptAI">Prompt AI</label>
-          <textarea [(ngModel)]="prompt" (input)="resetFormValues()" id="promptAI" placeholder="Tutaj wpisz swój prompt."></textarea>
-          @if (validationErrors && !prompt) {
+          <textarea [(ngModel)]="prompt.promptAI" (input)="resetFormValues()" id="promptAI" placeholder="Tutaj wpisz swój prompt."></textarea>
+          @if (validationErrors && !prompt.promptAI) {
             <p class="error">*Pole Prompt jest puste.</p>
           }
           <button class="form-btn" (click)="submitPrompt()">Wykonaj</button>
+          @if (submitted) {
+            <button class="form-btn" (click)="savePrompt()">
+              @if (this.currentIndex != null) {
+                Zmodyfikuj
+              } 
+              @else {
+                Zapisz 
+              }
+            </button>
+          }
         </div>
       </div>
       
-        @if (submitted && role && prompt) {
+        @if (submitted && prompt.role && prompt.promptAI) {
         <p>
           Prompt:
-            {{ preparedPrompt }}
+            {{ prompt.generatedPrompt }}
         </p>
       }
     </div>
@@ -54,8 +64,8 @@
     <div class="savedPrompts">
         @for (prompt of savedPrompts; track $index) {
           <div class="savedPrompt">
-            <p>{{ $index + 1 }}: {{prompt }}</p>
-            <button>Wczytaj</button>
+            <p>{{ $index + 1 }}: {{prompt.generatedPrompt }}</p>
+            <button (click)="setCurrentPrompt($index)">Wczytaj</button>
           </div>
         }
     </div>
