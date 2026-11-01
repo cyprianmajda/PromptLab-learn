@@ -30,26 +30,29 @@ export class App {
     this.filteredPrompts = this.savedPrompts;
   }
 
-  submitPrompt() {
+  submitPrompt() : boolean {
     this.resetFormValues();
     this.submitted = true;
 
     if (this.prompt.role && this.prompt.promptAI) {
       this.prompt.generatedPrompt = "Działaj jako " + this.prompt.role + ", wykonaj zadanie: " + this.prompt.promptAI;
+      return true;
     } else {
       this.validationErrors = true;
+      return false;
     }
   }
 
   savePrompt() {
-    this.submitPrompt();
-    if (this.currentPromptId != null) {
-      this.modifyPrompt(this.prompt);
-    } else {
-      this.addPromptToList();
+    if (this.submitPrompt()) {
+      if (this.currentPromptId != null) {
+        this.modifyPrompt(this.prompt);
+      } else {
+        this.addPromptToList();
+      }
+      this.currentPromptId = null;
+      this.prompt = new Prompt("", "");
     }
-    this.currentPromptId = null;
-    this.prompt = new Prompt("", "");
   }
   
   resetFormValues() {
@@ -67,7 +70,7 @@ export class App {
   }
 
   deletePrompt(prompt: Prompt) {
-    let index = this.savedPrompts.findIndex(savedPrompt => savedPrompt.id = prompt.id);
+    let index = this.savedPrompts.findIndex(savedPrompt => savedPrompt.id === prompt.id);
 
     this.savedPrompts.splice(index, 1);
     if (this.currentPromptId != null) {
@@ -77,8 +80,7 @@ export class App {
   }
 
   setCurrentPrompt(prompt: Prompt) {
-    let index = this.savedPrompts.findIndex(savedPrompt => savedPrompt.id = prompt.id);
-
+    let index = this.savedPrompts.findIndex(savedPrompt => savedPrompt.id === prompt.id);
     this.currentPage = "form";
     this.prompt = this.savedPrompts[index];
     this.currentPromptId = this.prompt.id;
