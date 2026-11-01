@@ -81,8 +81,7 @@ export class App {
 
     this.currentPage = "form";
     this.prompt = this.savedPrompts[index];
-    this.prompt = new Prompt(this.prompt.role, this.prompt.promptAI);
-    this.currentPromptId = prompt.id;
+    this.currentPromptId = this.prompt.id;
   }
 
   searchPrompt() {
