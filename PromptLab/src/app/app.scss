@@ -44,7 +44,6 @@ main, * {
 }
 .container {
     padding: 30px;
-    text-align: center;
     width: calc(100% - 60px);
 }
 .container-title {
@@ -101,9 +100,34 @@ textarea:hover {
     border: none;
     padding: 10px;
     border-radius: 10px;
-    width: calc(100% - 40px);
+    width: calc(100% - 20px);
     margin: 10px;
 }
 .savedPrompt {
-
+    width: calc(100% - 80px);
+    padding: 20px 40px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+.btn {
+    outline: none;
+    border: none;
+    padding: 10px 20px;
+    background-color: #dcdcdc;
+    border-radius: 10px;
+    margin: 0 5px;
+}
+.pill {
+    padding: 3px 15px;
+    background-color: #1a284b;
+    display: inline-block;
+    border-radius: 40px;
+    font-size: 12px;
+    color: #b2b2cb;
+    border: 1px solid #f0f0f0;
+}
+.pill-green {
+    background-color: green!important;
+    color: #f0f0f0;
 }

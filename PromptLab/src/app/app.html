@@ -41,7 +41,7 @@
           <button class="form-btn" (click)="submitPrompt()">Wykonaj</button>
           @if (submitted) {
             <button class="form-btn" (click)="savePrompt()">
-              @if (this.currentIndex != null) {
+              @if (this.currentPromptId != null) {
                 Zmodyfikuj
               } 
               @else {
@@ -61,14 +61,37 @@
     </div>
   }
   @if (currentPage == "savedPrompts") {
-    <div class="savedPrompts">
-        @for (prompt of savedPrompts; track $index) {
+    <div class="container" id="savedPrompts">
+        <div class="container-title">
+        <h2>
+          Zapisane Prompty
+        </h2>
+        <h4>
+          Tutaj znajdziesz swoje zapisane prompty.
+        </h4>
+        </div>
+        <div class="searchBar-container form">
+          <div class="formInput">
+            <label for="searchPrompts">
+              Wyszukiwane
+            </label>
+            <input name="searchPrompts" id="searchPrompts" [(ngModel)]="searchFilter" placeholder="np. Programista C#">
+            <button class="form-btn" (click)="searchPrompt()">Szukaj</button>
+          </div>
+        </div>
+        @for (prompt of filteredPrompts; track $index) {
           <div class="savedPrompt">
-            <p>{{ $index + 1 }}: {{prompt.generatedPrompt }}</p>
-            <button (click)="setCurrentPrompt($index)">Wczytaj</button>
+            <div class="prompt-info">
+              <div class="pill pill-green">
+                {{ prompt.role }}
+              </div>
+            </div>
+            <p>{{ prompt.id }}: {{prompt.generatedPrompt }}</p>
+            <button class="btn" (click)="setCurrentPrompt(prompt)">Wczytaj</button>
+            <button class="btn" (click)="deletePrompt(prompt)">Usun</button>
           </div>
         }
-    </div>
+      </div>
     }
   </div>
 </main>

@@ -16,7 +16,9 @@ export class App {
   submitted: boolean = false;
   validationErrors: boolean = false;
   savedPrompts: Prompt[] = [];
-  currentIndex: number | null = null;
+  filteredPrompts: Prompt[] = [];
+  currentPromptId: string | null = null;
+  searchFilter: string = "";
 
   showForm() {
     this.currentPage = "form";
@@ -24,6 +26,8 @@ export class App {
 
   showSaved() {
     this.currentPage = "savedPrompts";
+    this.searchFilter = "";
+    this.filteredPrompts = this.savedPrompts;
   }
 
   submitPrompt() {
@@ -39,12 +43,12 @@ export class App {
 
   savePrompt() {
     this.submitPrompt();
-    if (this.currentIndex != null) {
-      this.modifyPrompt(this.currentIndex);
+    if (this.currentPromptId != null) {
+      this.modifyPrompt(this.prompt);
     } else {
       this.addPromptToList();
     }
-    this.currentIndex = null;
+    this.currentPromptId = null;
     this.prompt = new Prompt("", "");
   }
   
@@ -57,14 +61,31 @@ export class App {
     this.savedPrompts.push(this.prompt);
   }
 
-  modifyPrompt(index: number) {
-    this.savedPrompts[index] = this.prompt;
+  modifyPrompt(prompt: Prompt) {
+    let index = this.savedPrompts.findIndex(savedPrompt => savedPrompt.id === prompt.id);
+    this.savedPrompts[index] = prompt;
   }
 
-  setCurrentPrompt(index: number) {
+  deletePrompt(prompt: Prompt) {
+    let index = this.savedPrompts.findIndex(savedPrompt => savedPrompt.id = prompt.id);
+
+    this.savedPrompts.splice(index, 1);
+    if (this.currentPromptId != null) {
+      this.currentPromptId = null;
+      this.prompt = new Prompt("", "");
+    }
+  }
+
+  setCurrentPrompt(prompt: Prompt) {
+    let index = this.savedPrompts.findIndex(savedPrompt => savedPrompt.id = prompt.id);
+
     this.currentPage = "form";
     this.prompt = this.savedPrompts[index];
     this.prompt = new Prompt(this.prompt.role, this.prompt.promptAI);
-    this.currentIndex = index;
+    this.currentPromptId = prompt.id;
+  }
+
+  searchPrompt() {
+    this.filteredPrompts = this.savedPrompts.filter(prompt => prompt.generatedPrompt.includes(this.searchFilter));
   }
 }
