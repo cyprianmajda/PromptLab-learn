@@ -20,14 +20,20 @@ export class App {
   currentPromptId: string | null = null;
   searchFilter: string = "";
 
+  ngOnInit() {
+    this.readLocalStorage();
+  }
+
   showForm() {
     this.currentPage = "form";
+    this.saveLocalStorage();
   }
 
   showSaved() {
     this.currentPage = "savedPrompts";
     this.searchFilter = "";
     this.filteredPrompts = this.savedPrompts;
+    this.saveLocalStorage();
   }
 
   submitPrompt() : boolean {
@@ -62,11 +68,13 @@ export class App {
 
   addPromptToList() {
     this.savedPrompts.push(this.prompt);
+    this.saveLocalStorage();
   }
 
   modifyPrompt(prompt: Prompt) {
     let index = this.savedPrompts.findIndex(savedPrompt => savedPrompt.id === prompt.id);
     this.savedPrompts[index] = prompt;
+    this.saveLocalStorage();
   }
 
   deletePrompt(prompt: Prompt) {
@@ -77,6 +85,7 @@ export class App {
       this.currentPromptId = null;
       this.prompt = new Prompt("", "");
     }
+    this.saveLocalStorage();
   }
 
   setCurrentPrompt(prompt: Prompt) {
@@ -87,6 +96,28 @@ export class App {
   }
 
   searchPrompt() {
-    this.filteredPrompts = this.savedPrompts.filter(prompt => prompt.generatedPrompt.includes(this.searchFilter));
+    let searchFilterCut = this.searchFilter.toUpperCase().trim();
+    this.filteredPrompts = this.savedPrompts.filter(prompt => prompt.role.toUpperCase().trim().includes(searchFilterCut) || prompt.promptAI.toUpperCase().trim().includes(searchFilterCut));
+  }
+
+  saveLocalStorage() {
+    let promptsJSON : string = JSON.stringify(this.savedPrompts);
+    localStorage.setItem("promptLab-prompts", promptsJSON);
+    localStorage.setItem("promptLab-currentPage", this.currentPage);
+  }
+
+  readLocalStorage() {
+    let promptsJSON = localStorage.getItem("promptLab-prompts");
+    let currentPageLocal = localStorage.getItem("promptLab-currentPage");
+
+    if (promptsJSON != null) {
+      this.savedPrompts = JSON.parse(promptsJSON);
+      this.filteredPrompts = this.savedPrompts;
+      this.searchFilter = "";
+    }
+
+    if (currentPageLocal != null && currentPageLocal != "") {
+      this.currentPage = currentPageLocal;
+    }
   }
 }

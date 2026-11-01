@@ -86,7 +86,7 @@
                 {{ prompt.role }}
               </div>
             </div>
-            <p>{{ prompt.id }}: {{prompt.generatedPrompt }}</p>
+            <p>{{prompt.generatedPrompt }}</p>
             <button class="btn" (click)="setCurrentPrompt(prompt)">Wczytaj</button>
             <button class="btn" (click)="deletePrompt(prompt)">Usun</button>
           </div>
